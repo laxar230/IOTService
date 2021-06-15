@@ -32,6 +32,22 @@ public class ReadingService {
         return repository.findById(id).orElse(null);
     }
 
+    public Reading getLatestReadingByID(long stationID){
+        LocalDateTime currentDate = LocalDateTime.now();
+        List<Reading> listReading = repository.findAllByStationId(stationID);
+        LocalDateTime actualDate = LocalDateTime.of(2021, 1, 1, 01,01);
+        Reading actualReading = null;
+        for(Reading reading : listReading){
+            if((reading.getDateOfRegistration() != null) && (actualDate != null)) {
+                if (reading.getDateOfRegistration().isAfter(actualDate)) {
+                    actualDate = reading.getDateOfRegistration();
+                    actualReading = reading;
+                }
+            }
+        }
+        return actualReading;
+    }
+
     public Reading getLatestReadingByName(String stationName){
         LocalDateTime currentDate = LocalDateTime.now();
         List<Reading> listReading = repository.findAllByStationName(stationName);

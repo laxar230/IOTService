@@ -10,6 +10,6 @@ import java.util.List;
 
 public interface ReadingRepository extends JpaRepository<Reading, Long> {
     Reading findByStationName(String stationName);
-
     List<Reading> findAllByStationName(String stationName);
+    List<Reading> findAllByStationId(long stationName);
 }
